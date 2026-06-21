@@ -11,7 +11,7 @@ const generateToken=(userId)=>{
 //@route    POST/api/auth/register
 //@access   Pubic
 const registerUser=async(req, res)=>{
-
+    
 };
 
 //@desc     Login user

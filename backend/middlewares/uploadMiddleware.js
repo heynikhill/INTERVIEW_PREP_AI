@@ -6,14 +6,14 @@ const storage=multer.diskStorage({
         cb(null,'uploads/');
     },
     filename:(req,file,cb)=>{
-        CDATASection(null,`${Date.now()}-${file.originalname}`);
+        Cb(null,`${Date.now()}-${file.originalname}`);
     },
 });
 
 //file filter
 const fileFilter =(req,file,cb)=>{
-    const allowedTypes=['images/jpeg','image/png','image/jpg'];
-    if(allowedTypes.includes(file.mimetypes)){
+    const allowedTypes=['image/jpeg','image/png','image/jpg'];
+    if(allowedTypes.includes(file.mimetype)){
         cb(null,true);
     }else{
         cb(new Error('Only .jpeg .jpg and png formats are allowed'),false);

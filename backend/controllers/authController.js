@@ -27,7 +27,7 @@ const registerUser=async(req, res)=>{
         const user=await User.create({
             name,
             email,
-            password:hashPassword,
+            password:hashedPassword,
             profileImageUrl,
         });
 
@@ -39,7 +39,7 @@ const registerUser=async(req, res)=>{
             token :generateToken(user._id),
         });
     }catch(error){
-        res.staus(500).json({message:"Server error",error:error.message})
+        res.status(500).json({message:"Server error",error:error.message})
     }        
 };
 
@@ -52,12 +52,12 @@ const loginUser=async (req, res)=>{
 
         const user=await User.findOne({email});
         if(!user){
-            return res.status(500).json({message:"Invalid email or password"});
+            return res.status(401).json({message:"Invalid email or password"});
         }
         //compare parrword
         const isMatch=await bcrypt.compare(password,user.password);
         if(!isMatch){
-            return res.status(500).json({message:"Invalid email or password"});
+            return res.status(401).json({message:"Invalid email or password"});
         }
 
         //return user data with JWT
@@ -66,7 +66,7 @@ const loginUser=async (req, res)=>{
             name:user.name,
             email:user.email,
             profileImageUrl:user.profileImageUrl,
-            token:generteToken(user._id),
+            token:generateToken(user._id),
         })
     }catch(error){
         res.status(500).json({message:"Server error",error:error.message});
@@ -82,7 +82,7 @@ const getUserProfile=async (req, res)=>{
         if(!user){
             return res.status(404).json({message:"server error",error:error.message});
         }
-    }catch(errro){
+    }catch(error){
         res.status(500).json({message:"server  error ",error:error.message});
     }
 };

@@ -1,12 +1,12 @@
-const espress =requrie(express);
-const {createSeeion, getSessionById, getMySessions, deleteSession}=require('../controllers/sessionController');
+const express =requrie("express");
+const {createSession, getSessionById, getMySessions, deleteSession}=require('../controllers/sessionController');
 const {protect} =require('../middlewares/authMiddleware');
 
 const router =express.Router();
 
-router.post('/create',protect,createSeeion);
-router.get('/my-sessions',protect,getMySession);
-router.get('./:id', ptotect, getSessionById);
-router.delete('./:id',protect,deleteSession);
+router.post('/create',protect,createSession);
+router.get('/my-sessions',protect,getMySessions);
+router.get('/:id', protect, getSessionById);
+router.delete('/:id',protect,deleteSession);
 
 module.exports=router;

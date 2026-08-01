@@ -4,12 +4,12 @@ const Question=require("../models/Question");
 //@desc     create a new session and linked questions
 //@routes   POST /api/sessions/create
 //@access   Private
-exports.createSession = asyns (req,res) => {
+exports.createSession = async (req,res) => {
     try{
-        const {role, experience, topicsToFocus, description, questions}=req,body;
+        const {role, experience, topicsToFocus, description, questions}=req.body;
         const userId=req.user._id; //Assuming you have a middleware setting req.user
 
-        const session= await Seesion.create({
+        const session= await Session.create({
             user:userId,
             role,
             experience,
@@ -20,7 +20,7 @@ exports.createSession = asyns (req,res) => {
         const questionDocs =await Promise.all(
             questions.map(async (q)=>{
                 const question =await Question.create({
-                    session: session-_id,
+                    session: session._id,
                     question:q.question,
                     answer:q.answer,
                 });
@@ -43,7 +43,7 @@ exports.createSession = asyns (req,res) => {
 exports.getMySessions=async (req,res) =>{
     try{
         const sessions =await Session.find ({ user: req.user.id})
-            .sort({ createAt: -1})
+            .sort({ createdAt: -1})
             .populate("questions");
         res.status(200).json(sessions);
     }
@@ -70,11 +70,11 @@ exports.getSessionByID =async (req,res) =>{
         }
         res.status(200).json({success:true,session});
     }catch(error){
-        res.status(500).json({Success:false,message:"server Error"});
+        res.status(500).json({success:false,message:"server Error"});
     }
 };
 
-//
+//@desc delettnig a session
 //@route DELETE /api/sessoins/:id
 //@access Private
 exports.deleteSession=async (req,res) =>{
@@ -92,11 +92,11 @@ exports.deleteSession=async (req,res) =>{
 
         }
         //first ,delete all question liked to this session
-        await Question.deletemany({session:session._id});
+        await Question.deleteMany({session:session._id});
         //Then,delete the session
         await session.deleteOne();
 
-        res.statis(200).json({message :"Sesion deleted successfully"});
+        res.status(200).json({message :"Session deleted successfully"});
     }catch(error){
         res.status(500).json({success:false,message:"Server Error"});
     }

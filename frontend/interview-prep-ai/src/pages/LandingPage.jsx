@@ -10,15 +10,25 @@ import {LuSparkles} from  'react-icons/lu'
 import Modal from '../components/Modal';
 import Login from './Auths/Login';
 import SignUp from './Auths/SignUp';
+import {useContext} from "react";
+import {UserContext} from "../context/userContext";
+import ProfileInfoCard from "../components/Cards/ProfileInfoCard";
 
 const LandingPage = () => {
+    const {user} =useContext(UserContext);
     const navigate = useNavigate();
 
     // useState is now correctly imported above
     const [openAuthModel, setOpenAuthModel] = useState(false);
     const [currentPage, setCurrentPage] = useState("login");
 
-    const handleCTA = () => {};
+    const handleCTA = () => {
+        if(!user){
+            setOpenAuthModel(true);
+        }else{
+            navigate("/dashboard")
+        }
+    };
 
     return (
         <>
@@ -32,12 +42,14 @@ const LandingPage = () => {
                             <div className='text-xl text-black font-bold'>
                                 InterView Prep AI
                             </div>
-                            <button
-                                className='bg-gradient-to-r from-[#FF9324] to-[#e99a4b] text-sm font-semibold text-white px-7 py-2.5 rounded-full hover:bg-black hover:text-white transition-colors cursor-pointer'
-                                onClick={() => setOpenAuthModel(true)}
-                            >
-                                Login / Sign Up
-                            </button>
+                            {user ? (<ProfileInfoCard/>):(
+                                <button
+                                    className='bg-gradient-to-r from-[#FF9324] to-[#e99a4b] text-sm font-semibold text-white px-7 py-2.5 rounded-full hover:bg-black hover:text-white transition-colors cursor-pointer'
+                                    onClick={() => setOpenAuthModel(true)}
+                                >
+                                    Login / Sign Up
+                                </button>
+                            )}
                         </header>
 
                         {/* Hero Content */}

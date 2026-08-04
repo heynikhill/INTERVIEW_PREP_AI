@@ -16,7 +16,7 @@ const app=express();
 app.use(
     cors({
         origin:"*",
-        methos:["GET", "POST", "PUT", "DELETE"],
+        methods:["GET", "POST", "PUT", "DELETE"],
         allowedHeaders: ["Content-Type","Authorization"],
     })
 );
@@ -30,7 +30,7 @@ app.use(express.json());
 app.use("/api/auth",authRoutes);
 app.use('/api/sessions',sessionRoutes);
 app.use('/api/questions',questionRoutes);
-app.use('/api/ai/generte-questions',Protect, generateInterviewQuestions);
+app.use('/api/ai/generate-questions',protect, generateInterviewQuestions);
 app.use('/api/ai/generate-explanation',protect,generateConceptExplanation);
 
 

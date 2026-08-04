@@ -10,7 +10,8 @@ const ProfileInfoCard= ()=>{
         clearUser();
         navigate("/");
     };
-    return (
+    return 
+        user && (
         <div className="flex items-center">
             <img src={user?.profileImageUrl} alt="Profile"  className="w-11 h-11 bg-gray-300 rounded-full mr-3"/>
             <div>

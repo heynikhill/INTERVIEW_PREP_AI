@@ -3,6 +3,8 @@ import {useNavigate} from "react-router-dom";
 import Input from '../../components/Inputs/Input';
 import { validateEmail } from "../../utils/helper";
 import ProfilePhotoSelector from "../../components/Inputs/ProfilePhotoSelector";
+import axiosInstance from '../../utils/axiosInstance';
+import { API_PATHS } from '../../utils/apiPaths';
 const SignUp = ({setCurrentPage}) => {
     const [profilePic,setProfilePic]=useState(null);
     const [fullName,setFullName]=useState("");
@@ -11,6 +13,7 @@ const SignUp = ({setCurrentPage}) => {
 
     const [error,setError]=useState(null);
     
+    const {updateUser}=useContext(UserContext);
     const navigate=useNavigate();
 
     //Handle signup from submit
@@ -34,6 +37,24 @@ const SignUp = ({setCurrentPage}) => {
 
         //SignUp API Call
         try{
+            //upload image if present
+            if(profilePic){
+                const imageloadRes =await uploadImage(profilePic);
+                profileImageUrl -imageloadRes.imageUrl || "";
+            }
+            const response =await axiosInstance.post(API_PATHS.AUTH.REGISTER,{
+                name:fullName,
+                 email,
+                password,
+                profileImageUrl,
+            });
+
+            const { token }=response.data;
+            if(token){
+                localStorage.setItem("token",token);
+                updateUser(response.data);
+                navigate("/dashboard");
+            }
 
         }catch(error){
             if(error.response && error.response.data.message ){

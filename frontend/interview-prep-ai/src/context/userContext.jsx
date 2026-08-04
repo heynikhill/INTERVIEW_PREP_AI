@@ -11,11 +11,11 @@ const UserProvider=({children}) =>{
     const [loading,setLoading]=useState(true);//New state to track loading
     
     //look i the it is define later or not
-    // const clearUser = () => {
-    //     setUser(null);
-    //     localStorage.removeItem("token");
-    //     setLoading(false);
-    // };
+    const clearUser = () => {
+        setUser(null);
+        localStorage.removeItem("token");
+        setLoading(false);
+    };
 
     useEffect(()=>{
         if(user) return;

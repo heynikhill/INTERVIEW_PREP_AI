@@ -55,7 +55,7 @@ exports.getMySessions=async (req,res) =>{
 //@desc Get a session by ID with populated questions
 //@route GET/api/sessions/:id
 //@access Private
-exports.getSessionByID =async (req,res) =>{
+exports.getSessionById =async (req,res) =>{
     try{
         const session =await Session.findById(req.params.id)
             .populate({

@@ -40,7 +40,7 @@ const LandingPage = () => {
                         <header className='flex justify-between items-center mb-16'>
                             
                             <div className='text-xl text-black font-bold'>
-                                InterView Prep AI
+                                Interview Prep AI
                             </div>
                             {user ? (<ProfileInfoCard/>):(
                                 <button

@@ -25,3 +25,17 @@ export const APP_FEATURES = [
     description: "Easily save your interview sets, organize them neatly in your dashboard, and pick up your preparation right where you left off."
   }
 ];
+
+// export const CARD_BG = [
+//   "#FFEDD5",
+//   "#FEF3C7",
+//   "#DCFCE7",
+//   "#DBEAFE",
+//   "#FCE7F3",
+// ];
+export const CARD_BG = [
+  "#875CF5",
+  "#FF6900",
+  "#00B8A9",
+  "#3B82F6",
+];

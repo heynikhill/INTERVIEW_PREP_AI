@@ -1,7 +1,7 @@
 const User =require("../models/User");
 const bcrypt=require("bcryptjs");
 const jwt=require("jsonwebtoken");
-
+//  Unused Import
 const upload = require("../middlewares/uploadMiddleware");
 
 //Generate JWT Token
@@ -17,8 +17,8 @@ const registerUser=async(req, res)=>{
         const {name,email, password, profileImageUrl}=req.body;
         
         //checking if user already exists
-        const userExits =await User.findOne({email});
-        if(userExits){
+        const userExists =await User.findOne({email});
+        if(userExists){
             return res.status(400).json({message:"User already exists"});
         }
         //Hash password
@@ -46,7 +46,7 @@ const registerUser=async(req, res)=>{
 };
 
 //@desc     Login user
-//@route    POST /api/auth/register
+//@route    POST /api/auth/login
 //@access   Public
 const loginUser=async (req, res)=>{
     try{
@@ -56,7 +56,7 @@ const loginUser=async (req, res)=>{
         if(!user){
             return res.status(401).json({message:"Invalid email or password"});
         }
-        //compare parrword
+        //compare password
         const isMatch=await bcrypt.compare(password,user.password);
         if(!isMatch){
             return res.status(401).json({message:"Invalid email or password"});
@@ -82,10 +82,13 @@ const getUserProfile=async (req, res)=>{
     try{
         const user=await User.findById(req.user.id).select("-password");
         if(!user){
-            return res.status(404).json({message:"server error",error:error.message});
+            return res.status(404).json({message:"User not found"});
         }
+        res.json(user);//the response will keep waiting if the user not found.(added);
     }catch(error){
-        res.status(500).json({message:"server  error ",error:error.message});
+        res.status(500).json({message:"server  error "
+            // ,error:error.message(remove)
+        });
     }
 };
 

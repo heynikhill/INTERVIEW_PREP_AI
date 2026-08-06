@@ -15,6 +15,13 @@
             return res.status(404).json({message:"Session not found"});
         }
 
+        //(added) Otherwise any logged-in user can add questions to someone else's session.
+        if (session.user.toString() !== req.user.id) {
+        return res.status(401).json({
+            message: "Not authorized",
+        });
+}
+
         //create new questions
         const createdQuestions=await Question.insertMany(
             questions.map((q) => ({

@@ -1,10 +1,12 @@
-import React ,{useState} from 'react'
+import React ,{useState,useContext} from 'react'
 import {useNavigate} from "react-router-dom";
 import Input from '../../components/Inputs/Input';
 import { validateEmail } from "../../utils/helper";
 import ProfilePhotoSelector from "../../components/Inputs/ProfilePhotoSelector";
 import axiosInstance from '../../utils/axiosInstance';
 import { API_PATHS } from '../../utils/apiPaths';
+import {UserContext} from "../../context/userContext";
+import uploadImage from "../../utils/uploadImage";
 const SignUp = ({setCurrentPage}) => {
     const [profilePic,setProfilePic]=useState(null);
     const [fullName,setFullName]=useState("");
@@ -40,7 +42,7 @@ const SignUp = ({setCurrentPage}) => {
             //upload image if present
             if(profilePic){
                 const imageloadRes =await uploadImage(profilePic);
-                profileImageUrl -imageloadRes.imageUrl || "";
+                profileImageUrl =imageloadRes.imageUrl || "";
             }
             const response =await axiosInstance.post(API_PATHS.AUTH.REGISTER,{
                 name:fullName,
@@ -90,7 +92,7 @@ const SignUp = ({setCurrentPage}) => {
 
             <p className='text-[13px] text-slate-800 mt-3'>
                 Already an Account?{" "}
-                <button className='font-medium text-primary underline cursor-pointer' onClick={()=>{setCurrentPage("login");}} >Login</button>
+                <button type="button" className='font-medium text-primary underline cursor-pointer' onClick={()=>{setCurrentPage("login");}} >Login</button>
             </p>
         </form>
     </div>

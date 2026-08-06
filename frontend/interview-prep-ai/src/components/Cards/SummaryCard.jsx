@@ -2,7 +2,7 @@ import React from 'react';
 import { LuTrash2 } from 'react-icons/lu';
 import { getInitials } from '../../utils/helper';
 const SummaryCard=({
-    colors,
+    color,
     role,
     topicsToFocus,
     experience,
@@ -17,12 +17,12 @@ const SummaryCard=({
             >
                 <div
                     className="rounded-lg p-4 cursor-pointer relative"
-                    Style={{
-                        background:color.bgcolor,
+                    style={{
+                        background:color,
                     }}
                 >
                     <div className="flex items-start">
-                        <div className="flex-shrinl-0 w-12 h-12 bg-white rounded-md flex items-center justify-center mr-4">
+                        <div className="flex-shrink-0 w-12 h-12 bg-white rounded-md flex items-center justify-center mr-4">
                             <span className='text-lg font-semibold text-black'>
                                 {getInitials(role)}
                             </span>
@@ -43,7 +43,7 @@ const SummaryCard=({
                     <button className='hidden group-hover:flex items-center gap-2 text-xs text-rose-500 font-medium bg-rose-50 px-3 py-1 rounded text-nowrap border border-rose-100 hover:border-rose-200 cursor-pointer absolute top-0 right-0'
                         onClick={(e)=>{
                             e.stopPropagation();
-                            onDate();
+                            onDelete();
                         }}>
                             <LuTrash2/>
                     </button>

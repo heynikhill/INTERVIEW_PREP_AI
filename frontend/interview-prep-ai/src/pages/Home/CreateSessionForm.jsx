@@ -3,6 +3,8 @@ import {useNavigate} from "react-router-dom";
 import Input from '../../components/Inputs/Input';
 import SpinnerLoader from '../../components/Loader/SpinnerLoader';
 import axiosInstance from '../../utils/axiosInstance';
+import { API_PATHS } from '../../utils/apiPaths';
+
 const CreateSessionForm = () => {
   const [formData, setFormData] = useState({
     role: "",
@@ -117,7 +119,7 @@ const CreateSessionForm = () => {
             className="btn-primary w-full mt-2"
             disabled={isLoading}
         >
-          {isLoading && SpinnerLoader}  Create Session
+          {isLoading && <SpinnerLoader/>}  Create Session
         </button>
     </form>
     </div>

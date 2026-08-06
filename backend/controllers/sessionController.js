@@ -63,11 +63,19 @@ exports.getSessionById =async (req,res) =>{
                 options:{sort:{isPinned:-1,createdAt:1}},
             })
             .exec();
+        
         if(!session){
             return res
                 .status(404)
                 .json({success:false,message:"Session not found"});
         }
+        //(added) 5 lines
+         if (session.user.toString() !== req.user.id) {
+            return res.status(401).json({
+                success: false,
+                message: "Not authorized to access this session",
+            });
+}
         res.status(200).json({success:true,session});
     }catch(error){
         res.status(500).json({success:false,message:"server Error"});

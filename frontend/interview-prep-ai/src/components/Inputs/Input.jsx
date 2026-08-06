@@ -7,7 +7,7 @@ const Input =({ value, onChange, label, placeholder,type})=>{
         setShowPassword(!showPassword);
     };
     return <div className='mb-5'>
-        <label className=' text-[13px] text-slate-800 mb2'>{label}</label>
+        <label className=' text-[13px] text-slate-800 mb-2'>{label}</label>
         <div className='flex items-center border border-slate-200 rounded-xl px-4 py-3 shadow-sm hover:shadow-md transition-shadow'>
             <input type={type==='password'?(showPassword?"text":"password") :type} 
                    placeholder={placeholder}

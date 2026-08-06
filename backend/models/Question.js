@@ -5,7 +5,7 @@ const questionSchema=new mongoose.Schema({
     question:String,
     answer:String,
     note:String,
-    isPinned:{type:Boolean, dafault:false},
+    isPinned:{type:Boolean, default:false},
 },{timestamps:true});
 
 module.exports=mongoose.model("Question",questionSchema);

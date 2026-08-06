@@ -6,7 +6,11 @@ import DashboardLayout from '../../components/layouts/DashboardLayout';
 import {useNavigate} from 'react-router-dom';
 import { API_PATHS } from '../../utils/apiPaths';
 import moment from "moment";
-
+import axiosInstance from '../../utils/axiosInstance';
+import SummaryCard from "../../components/Cards/SummaryCard";
+import Modal from "../../components/Modal";
+import CreateSessionForm from "./CreateSessionForm";
+import DeleteAlertContent from "../../components/DeleteAlertContent";
 
 const Dashboard = () => {
     const navigate = useNavigate();
@@ -28,7 +32,20 @@ const Dashboard = () => {
         }
     };
 
-    const deleteSession = async (sessionData) => {};
+    const deleteSession = async (sessionData) => {
+        try{
+            await axiosInstance.delete(API_PATHS.SESSION.DELETE(sessionData?._id));
+
+            toast.success("Session Deleted Successfully");
+            setOpenDeleteAlert({
+                open:false,
+                data:null,
+            });
+            fetchAllSessions();
+        }catch(error){
+            console.log("Error deleting session data",error);
+        }
+    };
 
     useEffect(() => {
         fetchAllSessions();
@@ -41,7 +58,7 @@ const Dashboard = () => {
                 {sessions?.map((data, index) => (
                     <SummaryCard
                         key={data?._id}
-                        colors={CARD_BG[index % CARD_BG.length]}
+                        color={CARD_BG[index % CARD_BG.length]}
                         role={data?.role || ""}
                         topicsToFocus={data?.topicsToFocus || ""}
                         experience={data?.experience || "-"}
@@ -59,7 +76,7 @@ const Dashboard = () => {
             </div>
 
             <button
-            className="h-12 md:h-12 flex items-center justify-center gap-3 bg-linear-to-r from=[#FF9324] to -[e99a4b] text-sm font -semibold text-white px-7 py-2.5 rounded-full hover:bg-black hover:text-white transition-colors cursor-pointer hover:shadow-2xl hover:shadow-orange-300 fixed bottom-10 md:bottom-20 right-10 md:right-20 "
+            className="h-12 md:h-12 flex items-center justify-center gap-3 bg-gradient-to-r from-[#FF9324] to -[e99a4b] text-sm font-semibold text-white px-7 py-2.5 rounded-full hover:bg-black hover:text-white transition-colors cursor-pointer hover:shadow-2xl hover:shadow-orange-300 fixed bottom-10 md:bottom-20 right-10 md:right-20 "
             onClick={() => setOpenCreateModal(true)}
             >
             <LuPlus className="text-2xl text-white" />
@@ -78,7 +95,7 @@ const Dashboard = () => {
             </div>
         </Modal>
 
-        <Model
+        <Modal
             isOpen={openDeleteAlert?.open}
             onClose={()=>{
                 setOpenDeleteAlert({open:false,data:null});
@@ -91,7 +108,7 @@ const Dashboard = () => {
                     onDelete={()=>deleteSession(openDeleteAlert.data)}
                 />
             </div>
-        </Model>
+        </Modal>
 
         </DashboardLayout>
     )
